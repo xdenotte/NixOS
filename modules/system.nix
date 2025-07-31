@@ -38,7 +38,6 @@
     discord
     steam
     niri
-    quickshell
     networkmanagerapplet
     kdePackages.kate
 
