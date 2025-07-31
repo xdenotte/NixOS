@@ -1,7 +1,7 @@
 
 { config, pkgs, ... }: {
   imports = [ ./../modules/system.nix ];
-  ./hosts/hardware-configuration.nix
+  ./../hosts/hardware-configuration.nix
 
   networking.hostName = "hestia";
 
