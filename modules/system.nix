@@ -27,7 +27,7 @@
   networking.networkmanager.enable = true;
   services.timesyncd.enable = true;
 
-  services.ly = {
+  services.displayManager.ly = {
     enable = true;
     settings.default_session = {
       user = "xdenotte";
