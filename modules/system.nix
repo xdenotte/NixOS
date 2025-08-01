@@ -26,12 +26,7 @@
   networking.networkmanager.enable = true;
   services.timesyncd.enable = true;
 
-  services.displayManager.ly = {
-    enable = true;
-    settings.default_session = {
-      user = "xdenotte";
-    };
-  };
+  services.displayManager.ly.enable = true;
 
   environment.systemPackages = with pkgs; [
     chromium
