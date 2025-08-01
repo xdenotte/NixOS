@@ -39,8 +39,6 @@
       };
     };
 
-    xdg.enable = true;
-
     xdg.desktopEntries.spotify = {
       name = "Spotify";
       genericName = "Music Player";

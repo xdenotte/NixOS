@@ -24,10 +24,32 @@
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 5d";
+  };
 
-  # Audio Settings
+  systemd = {
+  user.services.polkit-gnome-authentication-agent-1 = {
+    description = "polkit-gnome-authentication-agent-1";
+    wantedBy = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
+  };
+  
+  # Audio and Some settings
   services.pulseaudio.enable = false;
   services.upower.enable = true;
+  security.polkit.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -48,26 +70,31 @@
     QML_IMPORT_PATH = "${pkgs.qt6.qt5compat}/lib/qt-6/qml:${pkgs.qt6.qtdeclarative}/lib/qt-6/qml";
   };
 
+  xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config = {
+        common = {
+          default = ["gtk"]; "org.freedesktop.impl.portal.ScreenCast" = "gnome";
+        };
+      };
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-gnome
+      ];
+    };
+
   networking.networkmanager.enable = true;
   services.timesyncd.enable = true;
 
   services.displayManager.ly.enable = true;
   xdg.icons.enable = true;
 
-  xdg.portal = {
-  enable = true;
-  extraPortals = with pkgs; [
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-gnome
-  ];
-  config.common.default = "*";
-};
-
-
   environment.systemPackages = with pkgs; [
     git
     chromium
     discord
+    vesktop
     steam
     niri
     networkmanagerapplet
@@ -96,12 +123,17 @@
     kdePackages.qtbase
     kdePackages.qtdeclarative
     kdePackages.qtstyleplugin-kvantum
+    polkit_gnome
     hypridle
     upower
     heroic
     prismlauncher
     spotify
     power-profiles-daemon
+    mangohud
+    htop
+    windsurf
+    mpv
 
     font-manager
     fira
@@ -122,4 +154,5 @@
   ];
 
   programs.niri.enable = true;
+  programs.gamemode.enable = true;
 }
