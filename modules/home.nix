@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   home-manager.users.xdenotte = {
+    home.homeDirectory = "/home/xdenotte";
     home.stateVersion = "25.05";
 
     home.packages = with pkgs; [
@@ -27,6 +28,10 @@
       iconTheme = {
         name = "Papirus";
         package = pkgs.papirus-icon-theme;
+      };
+      font = {
+        name = "Adwaita Sans";
+        package = pkgs.adwaita-fonts;
       };
     };
 

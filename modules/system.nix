@@ -7,12 +7,17 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   nixpkgs.config.allowUnfree = true;
+  services.power-profiles-daemon.enable = true;
   services.xserver.enable = false;
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+      vaapiVdpau
+    ];
   };
 
   hardware.nvidia = {
@@ -22,6 +27,14 @@
     nvidiaSettings = true;
 
     package = config.boot.kernelPackages.nvidiaPackages.beta;
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      amdgpuBusId = "PCI:05:0:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
   nix.gc = {
@@ -45,9 +58,30 @@
       };
     };
   };
-  
+
+  # Fonts
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+    fira-sans
+    roboto
+    open-sans
+    noto-fonts
+    corefonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    noto-fonts-extra
+    lilex
+    noto-fonts-emoji
+    liberation_ttf
+    dejavu_fonts
+    fira-code-symbols
+    material-symbols
+    material-icons
+    wqy_zenhei
+  ];
+};
   # Audio and Some settings
-  services.pulseaudio.enable = false;
   services.upower.enable = true;
   security.polkit.enable = true;
   security.rtkit.enable = true;
@@ -70,20 +104,6 @@
     QML_IMPORT_PATH = "${pkgs.qt6.qt5compat}/lib/qt-6/qml:${pkgs.qt6.qtdeclarative}/lib/qt-6/qml";
   };
 
-  xdg.portal = {
-      enable = true;
-      xdgOpenUsePortal = true;
-      config = {
-        common = {
-          default = ["gtk"]; "org.freedesktop.impl.portal.ScreenCast" = "gnome";
-        };
-      };
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-gnome
-      ];
-    };
-
   networking.networkmanager.enable = true;
   services.timesyncd.enable = true;
 
@@ -95,7 +115,6 @@
     chromium
     discord
     vesktop
-    steam
     niri
     networkmanagerapplet
     kdePackages.kate
@@ -104,15 +123,13 @@
     xwayland-satellite
     brightnessctl
     nemo
-    xdg-desktop-portal-gnome
     papirus-icon-theme
     bibata-cursors
     gnome-themes-extra
     nwg-look
     pavucontrol
+    telegram-desktop
     qt6ct
-    material-symbols
-    material-icons
     swww
     wallust
     cava
@@ -134,25 +151,43 @@
     htop
     windsurf
     mpv
-
+    file-roller
+    stress-ng
     font-manager
-    fira
-    noto-fonts
-    corefonts
-    noto-fonts-cjk-sans
-    google-fonts
-    lilex
-    noto-fonts-emoji
-    liberation_ttf
-    corefonts
-    dejavu_fonts
-    fira-code-symbols
-    mplus-outline-fonts.githubRelease
-    dina-font
-    proggyfonts
     lshw
+    glib
+    gtk4
+    ffmpeg
+    libreoffice
+    gsettings-desktop-schemas
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-ugly
+    gst_all_1.gst-libav
+    gst_all_1.gst-vaapi
   ];
 
   programs.niri.enable = true;
   programs.gamemode.enable = true;
+  programs.steam.enable = true;
+  programs.obs-studio = {
+    enable = true;
+
+    package = (
+      pkgs.obs-studio.override {
+        cudaSupport = true;
+      }
+    );
+
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-backgroundremoval
+      obs-pipewire-audio-capture
+      obs-vaapi
+      obs-gstreamer
+      obs-vkcapture
+      ];
+    };
 }
