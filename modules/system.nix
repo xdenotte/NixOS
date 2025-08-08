@@ -100,10 +100,6 @@
     };
   };
 
-  environment.sessionVariables = {
-    QML_IMPORT_PATH = "${pkgs.qt6.qt5compat}/lib/qt-6/qml:${pkgs.qt6.qtdeclarative}/lib/qt-6/qml";
-  };
-
   networking.networkmanager.enable = true;
   services.timesyncd.enable = true;
 
@@ -156,8 +152,8 @@
     font-manager
     lshw
     glib
-    gtk4
     ffmpeg
+    bbe
     libreoffice
     gsettings-desktop-schemas
     gst_all_1.gstreamer
