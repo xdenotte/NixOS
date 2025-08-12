@@ -102,6 +102,7 @@
 
   networking.networkmanager.enable = true;
   services.timesyncd.enable = true;
+  services.gvfs.enable = true;
 
   services.displayManager.ly.enable = true;
   xdg.icons.enable = true;
@@ -165,6 +166,10 @@
     gst_all_1.gst-vaapi
   ];
 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
   programs.niri.enable = true;
   programs.gamemode.enable = true;
   programs.steam.enable = true;
