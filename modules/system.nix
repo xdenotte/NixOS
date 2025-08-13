@@ -84,7 +84,7 @@
 
   stylix = {
   enable = true;
-  image = ./wallpaper/wallhaven-qr2r1d.jpg; # путь к обоям
+  image = ./wallpapers/wallhaven-qr2r1d.jpg; # путь к обоям
   polarity = "dark"; # или "light" — можно auto
 };
 
