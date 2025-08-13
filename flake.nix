@@ -18,7 +18,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, home-manager, quickshell, ... }:
+  outputs = { self, nixpkgs, flake-utils, home-manager, quickshell, stylix, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -35,6 +35,7 @@
           ./hosts/hestia.nix
           ./modules/system.nix
           home-manager.nixosModules.home-manager
+          stylix.nixosModules.stylix
 
           {
             _module.args = {

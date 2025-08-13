@@ -4,6 +4,7 @@
     ./../modules/system.nix
     ./../modules/home.nix
     ./../modules/xdg.nix
+    ./../modules/stylix.nix
   ];
 
   networking.hostName = "hestia";
