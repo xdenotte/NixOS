@@ -18,7 +18,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, home-manager, quickshell, stylix, ... }:
+  outputs = { self, nixpkgs, flake-utils, home-manager, quickshell, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -32,7 +32,6 @@
       nixosConfigurations.hestia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          stylix.nixosModules.stylix
           ./hosts/hestia.nix
           ./modules/system.nix
           home-manager.nixosModules.home-manager
