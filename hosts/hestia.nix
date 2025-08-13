@@ -11,7 +11,6 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.plymouth.enable = true;
-  boot.plymouth.theme = "bgrt";
   boot.plymouth.themePackages = [ pkgs.plymouth ];
 
   boot.initrd.systemd.enable = true;
