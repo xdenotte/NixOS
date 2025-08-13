@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager.url = "github:nix-community/home-manager/";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -14,7 +18,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, home-manager, quickshell, ... }:
+  outputs = { self, nixpkgs, flake-utils, home-manager, quickshell, stylix, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -28,6 +32,7 @@
       nixosConfigurations.hestia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          stylix.nixosModules.stylix
           ./hosts/hestia.nix
           ./modules/system.nix
           home-manager.nixosModules.home-manager

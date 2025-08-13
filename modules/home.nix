@@ -5,6 +5,7 @@
 
     home.packages = with pkgs; [
       papirus-icon-theme
+      colloid-gtk-theme
       pkgs.kdePackages.breeze
       pkgs.qt6Packages.qtstyleplugin-kvantum
       pkgs.qt6ct
@@ -22,8 +23,8 @@
     gtk = {
       enable = true;
       theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome-themes-extra;
+        name = "Colloid-Dark";
+        package = pkgs.colloid-gtk-theme;
       };
       iconTheme = {
         name = "Papirus";
@@ -56,7 +57,7 @@
     };
 
     home.sessionVariables = {
-      GTK_THEME = "Adwaita-dark";
+      GTK_THEME = "Colloid-Dark";
       QT_QPA_PLATFORMTHEME = "qt6ct";
       QT_STYLE_OVERRIDE = "Breeze";
       XCURSOR_THEME = "Bibata-Modern-Classic";

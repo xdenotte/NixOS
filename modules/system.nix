@@ -26,7 +26,7 @@
     open = true;
     nvidiaSettings = true;
 
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
     prime = {
       offload = {
         enable = true;
@@ -81,6 +81,34 @@
     wqy_zenhei
   ];
 };
+
+  stylix = {
+  enable = true;
+  image = ./wallpaper/wallhaven-qr2r1d.jpg; # путь к обоям
+  polarity = "dark"; # или "light" — можно auto
+};
+
+  stylix.fonts = {
+  monospace = {
+    name = "JetBrainsMono Nerd Font";
+    package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+  };
+  sansSerif = {
+    name = "Inter";
+    package = pkgs.inter;
+  };
+  serif = {
+    name = "Noto Serif";
+    package = pkgs.noto-fonts;
+  };
+  emoji = {
+    name = "Noto Color Emoji";
+    package = pkgs.noto-fonts-emoji;
+  };
+};
+
+
+
   # Audio and Some settings
   services.upower.enable = true;
   security.polkit.enable = true;
@@ -153,6 +181,7 @@
     ffmpeg
     bbe
     libreoffice
+    matugen
     gsettings-desktop-schemas
     gst_all_1.gstreamer
     gst_all_1.gst-plugins-base
